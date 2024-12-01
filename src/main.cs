@@ -6,7 +6,8 @@ using CcShell;
 // Console.WriteLine("Logs from your program will appear here!");
 var commandRegistry = new Dictionary<string, IShellCommand>
 {
-    { "exit", new ExitCommand() }
+    { "exit", new ExitCommand() },
+    { "echo", new EchoCommand() },
 };
 
 while (true)
