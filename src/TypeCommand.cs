@@ -8,7 +8,7 @@ public class TypeCommand(Dictionary<string, IShellCommand> registry) : IShellCom
 
         var result = registry.ContainsKey(type) ?
             $"{type} is a shell builtin" 
-            : $"{type} invalid_command";
+            : $"{type} not found";
 
         return result + Environment.NewLine;
     }
