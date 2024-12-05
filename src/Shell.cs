@@ -1,9 +1,9 @@
+using CcShell.Helper;
+
 namespace CcShell;
 
 public class Shell(Dictionary<string, IShellCommand> commandRegistry)
 {
-    private readonly Dictionary<string, IShellCommand> _commandRegistry = commandRegistry;
-
     public void Run()
     {
         while (true)
@@ -14,20 +14,30 @@ public class Shell(Dictionary<string, IShellCommand> commandRegistry)
             if(input is null || !input.Any()) continue;
             
             var cmd = input.FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(cmd))
+            {
+                continue; // just ignore empty input and reprint the prompt 
+            }
+
             var opts = input.Skip(1).ToArray();
 
             try
             {
-                if (cmd is not null &&
-                    _commandRegistry.TryGetValue(cmd, out var cmdToRun))
+                if (commandRegistry.TryGetValue(cmd, out var cmdToRun))
                 {
                     if (cmdToRun.ValidateArguments(opts))
                         Console.Write(cmdToRun.Execute(opts));
+                    continue;
                 }
-                else
+
+                var program = FileSystem.GetExecutableProgram(cmd);
+                if (!string.IsNullOrWhiteSpace(program))
                 {
-                    HandleInvalidCommand(string.Join(' ', input));
+                    (new RunExternalCommand()).RunProgram(program, opts);
+                    continue;
                 }
+
+                HandleInvalidCommand(string.Join(' ', input));
             }
             catch (Exception ex)
             {
