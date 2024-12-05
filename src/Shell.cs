@@ -9,9 +9,12 @@ public class Shell(Dictionary<string, IShellCommand> commandRegistry)
         while (true)
         {
             Console.Write("$ ");
-            var input = Console.ReadLine()?.Split(' ');;
-            var cmd = input?.FirstOrDefault();
-            var opts = input?.Skip(1);
+            var input = Console.ReadLine()?.Split(' ').ToArray();;
+            
+            if(input is null || !input.Any()) continue;
+            
+            var cmd = input.FirstOrDefault();
+            var opts = input.Skip(1).ToArray();
 
             try
             {
