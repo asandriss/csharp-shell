@@ -9,8 +9,8 @@ public class Shell(Dictionary<string, IShellCommand> commandRegistry)
         while (true)
         {
             Console.Write("$ ");
-            var input = Console.ReadLine()?.Split(' ').ToArray();;
-            
+            var input = Console.ReadLine()?.Split(' ').ToArray();
+
             if(input is null || !input.Any()) continue;
             
             var cmd = input.FirstOrDefault();
@@ -44,10 +44,9 @@ public class Shell(Dictionary<string, IShellCommand> commandRegistry)
                 HandleInvalidCommand(ex.Message);
             }
         }
+        // ReSharper disable once FunctionNeverReturns
+        //  The graceful exit is handled inside the Exit command
     }
 
-    void HandleInvalidCommand(string? s)
-    {
-        Console.WriteLine($"{s}: command not found");
-    }
+    void HandleInvalidCommand(string? s) => Console.WriteLine($"{s}: command not found");
 }
