@@ -11,7 +11,7 @@ public class Shell(Dictionary<string, IShellCommand> commandRegistry)
             Console.Write("$ ");
             var input = Console.ReadLine()?.Split(' ').ToArray();
 
-            if(input is null || !input.Any()) continue;
+            if(input is null || input.Length == 0) continue;
             
             var cmd = input.FirstOrDefault();
             if (string.IsNullOrWhiteSpace(cmd))
