@@ -1,4 +1,6 @@
 using CcShell.Helper;
+using LanguageExt;
+using LanguageExt.Common;
 
 namespace CcShell;
 
@@ -20,8 +22,15 @@ public class TypeCommand(Dictionary<string, IShellCommand> registry) : IShellCom
         return $"{type}: not found" + Environment.NewLine;
     }
 
-    public bool ValidateArguments(IEnumerable<string>? args)
+    public Validation<Error, IEnumerable<string>> ValidateArguments(IEnumerable<string>? args)
     {
-        return args is not null && args.Any();
+        if (args is null)
+            return Validation<Error, IEnumerable<string>>.Fail(Error.New("args must be passed in"));
+
+        var @params = args.ToArray();
+        
+        return @params.Count() != 1 
+           ? Validation<Error, IEnumerable<string>>.Fail(Error.New("provide type name to check")) 
+           : Validation<Error, IEnumerable<string>>.Success(@params);
     }
 }

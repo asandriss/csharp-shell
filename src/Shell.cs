@@ -25,8 +25,15 @@ public class Shell(Dictionary<string, IShellCommand> commandRegistry)
             {
                 if (commandRegistry.TryGetValue(cmd, out var cmdToRun))
                 {
-                    if (cmdToRun.ValidateArguments(opts))
-                        Console.Write(cmdToRun.Execute(opts));
+                    var result = cmdToRun.ValidateArguments(opts);
+
+                    var message = result.Match(
+                        validArgs => cmdToRun.Execute(validArgs),
+                        err => err.Message
+                    );
+                    
+                    Console.Write(message);
+                    
                     continue;
                 }
 

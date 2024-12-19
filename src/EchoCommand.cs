@@ -1,4 +1,6 @@
 using System.Windows.Input;
+using LanguageExt;
+using LanguageExt.Common;
 
 namespace CcShell;
 
@@ -9,8 +11,8 @@ public class EchoCommand : IShellCommand
         return string.Join(' ', args) + Environment.NewLine;
     }
 
-    public bool ValidateArguments(IEnumerable<string>? args)
+    public Validation<Error, IEnumerable<string>> ValidateArguments(IEnumerable<string>? args)
     {
-        return true;
+        return new Validation.Success<Error, IEnumerable<string>>(args ?? []);
     }
 }

@@ -1,3 +1,6 @@
+using LanguageExt;
+using LanguageExt.Common;
+
 namespace CcShell;
 
 public class PwdCommand : IShellCommand
@@ -7,8 +10,8 @@ public class PwdCommand : IShellCommand
         return Directory.GetCurrentDirectory() + Environment.NewLine;
     }
 
-    public bool ValidateArguments(IEnumerable<string>? args)
+    public Validation<Error, IEnumerable<string>> ValidateArguments(IEnumerable<string>? args)
     {
-        return true;
+        return Validation<Error, IEnumerable<string>>.Success(args ?? []);
     }
 }
