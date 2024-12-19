@@ -12,6 +12,7 @@ public class TypeCommand(Dictionary<string, IShellCommand> registry) : IShellCom
 
         if (registry.ContainsKey(type))
             return $"{type} is a shell builtin" + Environment.NewLine;
+        
         var exec = FileSystem.GetExecutableProgram(type);
 
         if (!string.IsNullOrWhiteSpace(exec))
