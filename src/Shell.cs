@@ -4,6 +4,7 @@ namespace CcShell;
 
 public class Shell(Dictionary<string, IShellCommand> commandRegistry)
 {
+    private ShellContext _context = new ShellContext();
     public void Run()
     {
         while (true)
@@ -28,7 +29,7 @@ public class Shell(Dictionary<string, IShellCommand> commandRegistry)
                     var result = cmdToRun.ValidateArguments(opts);
 
                     var message = result.Match(
-                        validArgs => cmdToRun.Execute(validArgs),
+                        validArgs => cmdToRun.Execute(validArgs, _context),
                         err => err.Message
                     );
                     

@@ -6,7 +6,7 @@ namespace CcShell;
 
 public class TypeCommand(Dictionary<string, IShellCommand> registry) : IShellCommand
 {
-    public string Execute(IEnumerable<string> args)
+    public string Execute(IEnumerable<string> args, ShellContext context)
     {
         var type = args.First();
 

@@ -6,7 +6,7 @@ namespace CcShell;
 
 public class EchoCommand : IShellCommand
 {
-    public string Execute(IEnumerable<string> args)
+    public string Execute(IEnumerable<string> args, ShellContext ctx)
     {
         return string.Join(' ', args) + Environment.NewLine;
     }

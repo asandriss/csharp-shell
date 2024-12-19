@@ -6,7 +6,7 @@ namespace CcShell;
 
 public class ExitCommand : IShellCommand
 {
-    public string Execute(IEnumerable<string> args)
+    public string Execute(IEnumerable<string> args, ShellContext context)
     {
         if (args.FirstOrDefault() == "0")
             Environment.Exit(0);
