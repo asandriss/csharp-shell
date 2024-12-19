@@ -21,7 +21,7 @@ public class ExitCommand : IShellCommand
         var @params = args.ToArray();
         
         return @params.Count() != 1 
-           ? Validation<Error, IEnumerable<string>>.Fail(Error.New("you must pass an argument to exit command")) 
+           ? Validation<Error, IEnumerable<string>>.Fail(Error.New("you must pass an argument to exit command\n")) 
            : Validation<Error, IEnumerable<string>>.Success(@params);
     }
  
